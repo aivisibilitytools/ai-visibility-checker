@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free FAQ Generator for AI Search Visibility</title>
+    <meta
+      name="description"
+      content="Generate FAQ questions and answers for SaaS, indie products, and service websites. Create AI-search-friendly content for your homepage, pricing page, and comparison pages."
+    />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="../index.html">AI Visibility Tools</a>
+      <nav>
+        <a href="../index.html#checker">Free Audit</a>
+        <a href="llms-generator.html">llms.txt Generator</a>
+        <a href="faq-generator.html">FAQ Generator</a>
+        <a href="../index.html#pricing">Pricing</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Free AI visibility tool</p>
+          <h1>Generate FAQ answers AI search can quote.</h1>
+          <p class="subhead">
+            Create clear, specific FAQ content for your product pages. Use it to
+            answer buyer questions, target long-tail searches, and give AI
+            search engines better text to understand.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#generator">Generate FAQ</a>
+            <a class="button secondary" href="../index.html#pricing">Get Fix Kit</a>
+          </div>
+        </div>
+        <div class="hero-panel" aria-label="FAQ generator example">
+          <div class="score-card">
+            <span>What it creates</span>
+            <strong style="font-size: 46px;">FAQ</strong>
+            <small>AI-readable question answers</small>
+          </div>
+          <ul>
+            <li>Buyer-intent questions</li>
+            <li>Clear product answers</li>
+            <li>Comparison prompts</li>
+            <li>Objection handling</li>
+            <li>Copyable Markdown output</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="generator" class="checker">
+        <div class="section-heading">
+          <p class="eyebrow">Generator</p>
+          <h2>Create your FAQ draft</h2>
+          <p>
+            This runs in your browser. Nothing is uploaded or stored by this
+            static page.
+          </p>
+        </div>
+
+        <div class="tool-grid">
+          <form id="faqForm" class="card form-card">
+            <label>
+              Product name
+              <input id="productName" type="text" placeholder="Acme CRM" required />
+            </label>
+
+            <label>
+              Website URL
+              <input id="siteUrl" type="url" placeholder="https://example.com" />
+            </label>
+
+            <label>
+              One-sentence product description
+              <textarea
+                id="description"
+                rows="3"
+                placeholder="A lightweight CRM for solo consultants..."
+                required
+              ></textarea>
+            </label>
+
+            <label>
+              Target users
+              <input id="audience" type="text" placeholder="Solo consultants, small agencies" />
+            </label>
+
+            <label>
+              Main pain points
+              <textarea
+                id="painPoints"
+                rows="3"
+                placeholder="Forgetting follow-ups, scattered client notes, hard-to-review pipeline"
+              ></textarea>
+            </label>
+
+            <label>
+              Target search phrases
+              <textarea
+                id="keywords"
+                rows="3"
+                placeholder="best CRM for consultants&#10;simple client tracker&#10;CRM alternative for solo businesses"
+              ></textarea>
+            </label>
+
+            <label>
+              Competitors or alternatives
+              <input id="competitors" type="text" placeholder="HubSpot, Pipedrive, Notion" />
+            </label>
+
+            <label>
+              Pricing summary
+              <input id="pricing" type="text" placeholder="Free plan available. Pro starts at $19/month." />
+            </label>
+
+            <button class="button primary full" type="submit">Generate FAQ</button>
+          </form>
+
+          <aside class="card result-card">
+            <div class="result-header">
+              <div>
+                <p class="eyebrow">Output</p>
+                <h3>Your FAQ draft</h3>
+              </div>
+            </div>
+
+            <div id="faqOutput" class="report-output">
+              Fill out the form to generate a copyable FAQ draft.
+            </div>
+
+            <div class="copy-actions">
+              <button id="copyFaq" class="button secondary" type="button">Copy FAQ</button>
+              <button id="downloadFaq" class="button secondary" type="button">Download .md</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="pricing">
+        <div class="section-heading">
+          <p class="eyebrow">Next step</p>
+          <h2>Publish the FAQ where buyers already compare options</h2>
+          <p>
+            Add the FAQ to your homepage, pricing page, and comparison pages.
+            The paid Fix Kit includes page templates and Schema JSON-LD to make
+            those answers easier for AI search engines to cite.
+          </p>
+        </div>
+        <div class="price-grid">
+          <div class="card price-card featured">
+            <h3>AI Visibility Fix Kit</h3>
+            <p class="price">$19</p>
+            <ul>
+              <li>30-day optimization checklist</li>
+              <li>FAQ and comparison page templates</li>
+              <li>Schema JSON-LD templates</li>
+              <li>AI search testing prompt pack</li>
+            </ul>
+            <a
+              class="button primary full"
+              href="mailto:zzd050131@gmail.com?subject=AI%20Visibility%20Fix%20Kit&body=Hi%2C%20I%20want%20to%20buy%20the%20AI%20Visibility%20Fix%20Kit.%0A%0AMy%20website%3A%20%0AMy%20main%20AI%20visibility%20problem%3A%20"
+            >
+              Get the $19 Fix Kit
+            </a>
+          </div>
+
+          <div class="card price-card">
+            <h3>Where to publish</h3>
+            <p>
+              Use the generated FAQ below your product explanation, pricing
+              details, or competitor comparison copy.
+            </p>
+            <p>
+              Clear answers help humans scan faster and help AI search engines
+              summarize your product more accurately.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>AI Visibility Tools. Built as privacy-first static tools.</p>
+      <a href="../privacy.html">Privacy Policy</a>
+    </footer>
+
+    <script>
+      const form = document.querySelector("#faqForm");
+      const output = document.querySelector("#faqOutput");
+      const copyButton = document.querySelector("#copyFaq");
+      const downloadButton = document.querySelector("#downloadFaq");
+      let currentText = "";
+
+      const getValue = (id) => document.querySelector(`#${id}`).value.trim();
+      const listify = (value) =>
+        value
+          .split(/,|\n/)
+          .map((item) => item.trim())
+          .filter(Boolean);
+
+      const firstOrFallback = (items, fallback) => items[0] || fallback;
+
+      const buildFaq = () => {
+        const productName = getValue("productName");
+        const siteUrl = getValue("siteUrl");
+        const description = getValue("description");
+        const audience = listify(getValue("audience"));
+        const painPoints = listify(getValue("painPoints"));
+        const keywords = listify(getValue("keywords"));
+        const competitors = listify(getValue("competitors"));
+        const pricing = getValue("pricing");
+        const mainAudience = firstOrFallback(audience, "teams");
+        const mainPain = firstOrFallback(painPoints, "understanding which tool fits their workflow");
+        const mainKeyword = firstOrFallback(keywords, `${productName} FAQ`);
+        const mainCompetitor = firstOrFallback(competitors, "larger general-purpose tools");
+
+        return `# ${productName} FAQ
+
+${siteUrl ? `Website: ${siteUrl}\n` : ""}
+## 1. What is ${productName}?
+
+${productName} is ${description.charAt(0).toLowerCase()}${description.slice(1)}
+
+## 2. Who is ${productName} best for?
+
+${productName} is best for ${mainAudience}. It is especially useful when users need a focused way to solve ${mainPain}.
+
+## 3. What problem does ${productName} solve?
+
+${productName} helps users avoid ${mainPain}. Instead of piecing together broad tools or manual workflows, users get a clearer product experience built around their main job.
+
+## 4. What are the main use cases for ${productName}?
+
+${painPoints.length ? painPoints.map((item) => `- Solving ${item}`).join("\n") : "- Add your strongest use cases here."}
+
+## 5. How is ${productName} different from ${mainCompetitor}?
+
+${productName} is more focused on ${mainAudience} and their specific workflow. ${mainCompetitor} may be broader, but ${productName} is designed to be easier to understand, compare, and start using for this use case.
+
+## 6. What should buyers compare before choosing ${productName}?
+
+Buyers should compare ease of setup, fit for ${mainAudience}, pricing, support, and whether the product directly solves ${mainPain}.
+
+## 7. What search phrases is this page targeting?
+
+${keywords.length ? keywords.map((item) => `- ${item}`).join("\n") : `- ${mainKeyword}`}
+
+## 8. How much does ${productName} cost?
+
+${pricing || "Add a short pricing answer here. Mention free plans, trials, and paid tiers if available."}
+
+## 9. Is ${productName} good for small teams or solo users?
+
+Yes, if they need a focused product for ${mainPain}. It is a strong fit when users want clear answers, simple workflows, and fewer unnecessary features.
+
+## 10. Where can users learn more about ${productName}?
+
+${siteUrl ? `Users can visit ${siteUrl} to learn more, review pricing, and understand whether ${productName} fits their use case.` : "Add your homepage, pricing page, demo page, or contact page here."}
+`;
+      };
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        currentText = buildFaq();
+        output.textContent = currentText;
+      });
+
+      copyButton.addEventListener("click", async () => {
+        if (!currentText) return;
+        await navigator.clipboard.writeText(currentText);
+        copyButton.textContent = "Copied";
+        setTimeout(() => {
+          copyButton.textContent = "Copy FAQ";
+        }, 1200);
+      });
+
+      downloadButton.addEventListener("click", () => {
+        if (!currentText) return;
+        const blob = new Blob([currentText], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "faq-draft.md";
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+    </script>
+  </body>
+</html>
