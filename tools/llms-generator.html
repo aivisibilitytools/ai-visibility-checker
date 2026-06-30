@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free llms.txt Generator for SaaS Products</title>
+    <meta
+      name="description"
+      content="Generate a free llms.txt draft for your SaaS, indie product, or agency website. Help AI search tools understand your product, use cases, competitors, and key pages."
+    />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="../index.html">AI Visibility Tools</a>
+      <nav>
+        <a href="../index.html#checker">Free Audit</a>
+        <a href="llms-generator.html">llms.txt Generator</a>
+        <a href="../index.html#pricing">Pricing</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Free AI visibility tool</p>
+          <h1>Generate an llms.txt file for your product.</h1>
+          <p class="subhead">
+            Give AI search tools a clear summary of your product, target users,
+            use cases, competitors, pricing, and key pages. Copy the draft and
+            publish it at <strong>/llms.txt</strong> on your website.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#generator">Generate llms.txt</a>
+            <a class="button secondary" href="../index.html#pricing">Get Fix Kit</a>
+          </div>
+        </div>
+        <div class="hero-panel" aria-label="llms.txt example">
+          <div class="score-card">
+            <span>What it creates</span>
+            <strong style="font-size: 46px;">llms.txt</strong>
+            <small>AI-readable product context</small>
+          </div>
+          <ul>
+            <li>Product summary</li>
+            <li>Target users</li>
+            <li>Core use cases</li>
+            <li>Competitor context</li>
+            <li>Key URLs to cite</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="generator" class="checker">
+        <div class="section-heading">
+          <p class="eyebrow">Generator</p>
+          <h2>Create your llms.txt draft</h2>
+          <p>
+            This runs in your browser. Nothing is uploaded or stored by this
+            static page.
+          </p>
+        </div>
+
+        <div class="tool-grid">
+          <form id="llmsForm" class="card form-card">
+            <label>
+              Product name
+              <input id="productName" type="text" placeholder="Acme CRM" required />
+            </label>
+
+            <label>
+              Website URL
+              <input id="siteUrl" type="url" placeholder="https://example.com" required />
+            </label>
+
+            <label>
+              One-sentence product description
+              <textarea
+                id="description"
+                rows="3"
+                placeholder="A lightweight CRM for solo consultants..."
+                required
+              ></textarea>
+            </label>
+
+            <label>
+              Target users
+              <input id="audience" type="text" placeholder="Solo consultants, small agencies" />
+            </label>
+
+            <label>
+              Core use cases
+              <textarea
+                id="useCases"
+                rows="3"
+                placeholder="Track client follow-ups, manage leads, prepare weekly pipeline reviews"
+              ></textarea>
+            </label>
+
+            <label>
+              Competitors or alternatives
+              <input id="competitors" type="text" placeholder="HubSpot, Pipedrive, Notion" />
+            </label>
+
+            <label>
+              Important pages
+              <textarea
+                id="pages"
+                rows="3"
+                placeholder="Pricing: https://example.com/pricing&#10;FAQ: https://example.com/faq"
+              ></textarea>
+            </label>
+
+            <label>
+              Pricing summary
+              <input id="pricing" type="text" placeholder="Free plan available. Pro starts at $19/month." />
+            </label>
+
+            <button class="button primary full" type="submit">Generate llms.txt</button>
+          </form>
+
+          <aside class="card result-card">
+            <div class="result-header">
+              <div>
+                <p class="eyebrow">Output</p>
+                <h3>Your llms.txt draft</h3>
+              </div>
+            </div>
+
+            <div id="llmsOutput" class="report-output">
+              Fill out the form to generate a copyable llms.txt draft.
+            </div>
+
+            <div class="copy-actions">
+              <button id="copyLlms" class="button secondary" type="button">Copy llms.txt</button>
+              <button id="downloadLlms" class="button secondary" type="button">Download .txt</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="pricing">
+        <div class="section-heading">
+          <p class="eyebrow">Next step</p>
+          <h2>Improve the pages your llms.txt points to</h2>
+          <p>
+            The paid Fix Kit includes a 30-day checklist, FAQ templates,
+            comparison page templates, Schema JSON-LD, and AI search testing
+            prompts.
+          </p>
+        </div>
+        <div class="price-grid">
+          <div class="card price-card featured">
+            <h3>AI Visibility Fix Kit</h3>
+            <p class="price">$19</p>
+            <ul>
+              <li>30-day optimization checklist</li>
+              <li>FAQ and comparison page templates</li>
+              <li>Schema JSON-LD templates</li>
+              <li>AI search testing prompt pack</li>
+            </ul>
+            <a
+              class="button primary full"
+              href="mailto:zzd050131@gmail.com?subject=AI%20Visibility%20Fix%20Kit&body=Hi%2C%20I%20want%20to%20buy%20the%20AI%20Visibility%20Fix%20Kit.%0A%0AMy%20website%3A%20%0AMy%20main%20AI%20visibility%20problem%3A%20"
+            >
+              Get the $19 Fix Kit
+            </a>
+          </div>
+
+          <div class="card price-card">
+            <h3>Where to publish</h3>
+            <p>
+              Save the generated file as <strong>llms.txt</strong> and publish
+              it at the root of your website, for example:
+            </p>
+            <p><strong>https://yourdomain.com/llms.txt</strong></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>AI Visibility Tools. Built as privacy-first static tools.</p>
+      <a href="../privacy.html">Privacy Policy</a>
+    </footer>
+
+    <script>
+      const form = document.querySelector("#llmsForm");
+      const output = document.querySelector("#llmsOutput");
+      const copyButton = document.querySelector("#copyLlms");
+      const downloadButton = document.querySelector("#downloadLlms");
+      let currentText = "";
+
+      const getValue = (id) => document.querySelector(`#${id}`).value.trim();
+      const listify = (value) =>
+        value
+          .split(/,|\n/)
+          .map((item) => item.trim())
+          .filter(Boolean);
+
+      const buildPageList = (siteUrl, pages) => {
+        const cleanBase = siteUrl.replace(/\/$/, "");
+        const customPages = pages.trim();
+        if (customPages) {
+          return customPages
+            .split("\n")
+            .map((line) => `- ${line.trim()}`)
+            .filter((line) => line !== "-")
+            .join("\n");
+        }
+        return [
+          `- Homepage: ${cleanBase}`,
+          `- Pricing: ${cleanBase}/pricing`,
+          `- FAQ: ${cleanBase}/faq`,
+          `- Comparisons: ${cleanBase}/compare`,
+          `- Use cases: ${cleanBase}/use-cases`,
+        ].join("\n");
+      };
+
+      const buildLlms = () => {
+        const productName = getValue("productName");
+        const siteUrl = getValue("siteUrl");
+        const description = getValue("description");
+        const audience = listify(getValue("audience"));
+        const useCases = listify(getValue("useCases"));
+        const competitors = listify(getValue("competitors"));
+        const pages = getValue("pages");
+        const pricing = getValue("pricing");
+
+        return `# ${productName}
+
+> ${description}
+
+Website: ${siteUrl}
+
+## Product Summary
+
+${productName} helps ${audience[0] || "target users"} solve a specific problem with a focused product experience.
+
+## Target Users
+
+${audience.length ? audience.map((item) => `- ${item}`).join("\n") : "- Add target user groups here."}
+
+## Core Use Cases
+
+${useCases.length ? useCases.map((item) => `- ${item}`).join("\n") : "- Add core use cases here."}
+
+## Key Pages
+
+${buildPageList(siteUrl, pages)}
+
+## Competitive Context
+
+${competitors.length ? `${productName} is commonly compared with:\n\n${competitors.map((item) => `- ${item}`).join("\n")}` : "Add competitors or alternatives here."}
+
+## Best Fit
+
+${productName} is best for users who want:
+
+- A clear product for ${audience[0] || "their specific workflow"}
+- Practical help with ${useCases[0] || "their main use case"}
+- A focused alternative to overly broad tools
+
+## Pricing
+
+${pricing || "Add a short pricing summary here."}
+
+## Contact
+
+Add your support email or contact page here.
+`;
+      };
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        currentText = buildLlms();
+        output.textContent = currentText;
+      });
+
+      copyButton.addEventListener("click", async () => {
+        if (!currentText) return;
+        await navigator.clipboard.writeText(currentText);
+        copyButton.textContent = "Copied";
+        setTimeout(() => {
+          copyButton.textContent = "Copy llms.txt";
+        }, 1200);
+      });
+
+      downloadButton.addEventListener("click", () => {
+        if (!currentText) return;
+        const blob = new Blob([currentText], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "llms.txt";
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+    </script>
+  </body>
+</html>
