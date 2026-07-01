@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aivisibilitytools.github.io/ai-visibility-checker/sitemap.xml
