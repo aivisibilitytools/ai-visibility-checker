@@ -1,4 +1,4 @@
-const form = document.querySelector("#auditForm");
+﻿const form = document.querySelector("#auditForm");
 const reportOutput = document.querySelector("#reportOutput");
 const scoreValue = document.querySelector("#scoreValue");
 const resultTitle = document.querySelector("#resultTitle");
@@ -192,10 +192,10 @@ const getMissingSignals = (data) => {
 const getOffer = (score) => {
   if (score < 55) {
     return {
-      label: "Request a Mini Audit",
+      label: "Book the Mini Audit",
       price: "$149",
       note: "Best when the page needs a manual pass before templates will help.",
-      url: "mailto:zzd050131@gmail.com?subject=Request%20a%20Mini%20Audit",
+      url: "https://zzdynamo3.gumroad.com/l/mini-ai-visibility-audit",
       event: "audit_request",
     };
   }
@@ -209,10 +209,10 @@ const getOffer = (score) => {
     };
   }
   return {
-    label: "Request the Pro Kit",
+    label: "Get the Pro Kit",
     price: "$49",
     note: "Useful when the basics are in place and you want a broader rollout plan.",
-    url: "mailto:zzd050131@gmail.com?subject=AI%20Visibility%20Pro%20Kit",
+    url: "https://zzdynamo3.gumroad.com/l/ai-visibility-fix-kit",
     event: "kit_cta_click",
   };
 };
@@ -315,3 +315,4 @@ document.addEventListener("click", (event) => {
     trackEvent("audit_request", { url: link.href, text });
   }
 });
+
