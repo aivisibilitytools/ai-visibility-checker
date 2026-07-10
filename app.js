@@ -1,14 +1,28 @@
-﻿const form = document.querySelector("#auditForm");
+const form = document.querySelector("#auditForm");
+const reportPanel = document.querySelector("#reportPanel");
 const reportOutput = document.querySelector("#reportOutput");
 const scoreValue = document.querySelector("#scoreValue");
+const scoreMeaning = document.querySelector("#scoreMeaning");
 const resultTitle = document.querySelector("#resultTitle");
-const copyMarkdown = document.querySelector("#copyMarkdown");
-const copyLlms = document.querySelector("#copyLlms");
-const copySchema = document.querySelector("#copySchema");
+const submitButton = document.querySelector("#submitButton");
+const copyStatus = document.querySelector("#copyStatus");
+const copyFallback = document.querySelector("#copyFallback");
+const manualCopyText = document.querySelector("#manualCopyText");
+const menuButton = document.querySelector("#menuButton");
+const primaryNav = document.querySelector("#primaryNav");
+const exampleButton = document.querySelector("#exampleButton");
+const copyButtons = [
+  document.querySelector("#copyMarkdown"),
+  document.querySelector("#copyLlms"),
+  document.querySelector("#copySchema"),
+];
 
 let currentReport = "";
 let currentLlms = "";
 let currentSchema = "";
+
+const icons = () => window.lucide?.createIcons();
+window.addEventListener("DOMContentLoaded", icons);
 
 const trackEvent = (name, params = {}) => {
   window.dataLayer = window.dataLayer || [];
@@ -38,18 +52,21 @@ const scoreAudit = ({ brandName, productDescription, competitors, keywords, aiAn
   if (productDescription.length > 80) score += 12;
   if (competitors.length >= 2) score += 10;
   if (keywords.length >= 2) score += 10;
-  if (/faq|schema|comparison|alternative|pricing/i.test(productDescription + aiAnswer)) {
-    score += 8;
-  }
+  if (/faq|schema|comparison|alternative|pricing/i.test(productDescription + aiAnswer)) score += 8;
   if (!aiAnswer) score -= 8;
 
   return Math.max(0, Math.min(100, score));
 };
 
+const scoreLabel = (score) => {
+  if (score >= 75) return "Strong structure";
+  if (score >= 50) return "Good foundation";
+  return "Needs clearer signals";
+};
+
 const buildFaqIdeas = (brandName, targetUsers, keywords) => {
   const audience = targetUsers || "your target customers";
   const primaryKeyword = keywords[0] || "this product category";
-
   return [
     `What is ${brandName} best used for?`,
     `Who is ${brandName} designed for?`,
@@ -61,33 +78,22 @@ const buildFaqIdeas = (brandName, targetUsers, keywords) => {
 
 const buildRecommendations = ({ brandName, competitors, keywords, aiAnswer }) => {
   const recommendations = [];
-
   if (!aiAnswer.toLowerCase().includes(brandName.toLowerCase())) {
-    recommendations.push(
-      `Make the brand-product connection clearer. AI answers did not mention ${brandName}.`
-    );
+    recommendations.push(`Make the brand-product connection clearer. The pasted answer did not mention ${brandName}.`);
   }
-
-  if (competitors.length > 0) {
-    recommendations.push(
-      `Create comparison pages for ${competitors.slice(0, 3).join(", ")} so AI systems understand positioning.`
-    );
+  if (competitors.length) {
+    recommendations.push(`Create comparison pages for ${competitors.slice(0, 3).join(", ")}.`);
   } else {
-    recommendations.push("List 3 direct competitors and write a short comparison paragraph for each.");
+    recommendations.push("List three direct competitors and explain the difference in plain language.");
   }
-
-  if (keywords.length > 0) {
-    recommendations.push(
-      `Add pages or FAQ answers targeting: ${keywords.slice(0, 3).join(", ")}.`
-    );
+  if (keywords.length) {
+    recommendations.push(`Add pages or FAQ answers targeting: ${keywords.slice(0, 3).join(", ")}.`);
   } else {
-    recommendations.push("Define 3 search phrases customers would ask AI assistants.");
+    recommendations.push("Define three phrases customers would ask an AI assistant.");
   }
-
   recommendations.push("Add a concise FAQ section with question-style headings.");
   recommendations.push("Publish SoftwareApplication structured data on the homepage.");
   recommendations.push("Create an llms.txt file that summarizes the product, audience, use cases, and key URLs.");
-
   return recommendations;
 };
 
@@ -106,7 +112,7 @@ ${keywords.length ? keywords.map((item) => `- ${item}`).join("\n") : "- Add core
 Competitive context:
 ${competitors.length ? competitors.map((item) => `- Alternative to ${item}`).join("\n") : "- Add competitor and alternative context here."}
 
-Recommended pages for AI systems:
+Recommended pages:
 - Homepage: ${websiteUrl}
 - Pricing: ${websiteUrl.replace(/\/$/, "")}/pricing
 - FAQ: ${websiteUrl.replace(/\/$/, "")}/faq
@@ -123,58 +129,10 @@ const buildSchema = ({ brandName, websiteUrl, productDescription }) =>
       description: productDescription,
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-      },
     },
     null,
     2
   );
-
-const buildReport = (data) => {
-  const score = scoreAudit(data);
-  const recommendations = buildRecommendations(data);
-  const faqIdeas = buildFaqIdeas(data.brandName, data.targetUsers, data.keywords);
-
-  currentLlms = buildLlms(data);
-  currentSchema = buildSchema(data);
-
-  return `# AI Visibility Audit: ${data.brandName}
-
-Score: ${score}/100
-
-## What this means
-${score >= 75
-  ? "Your product has a solid base, but you can still improve AI answer coverage."
-  : score >= 55
-    ? "Your product is understandable, but AI systems may not confidently recommend it yet."
-    : "Your product needs clearer public signals before AI systems can reliably understand it."}
-
-## Missing signals
-- FAQ answers written as customer questions
-- Clear competitor and alternative positioning
-- Structured data for software/product context
-- llms.txt summary for AI crawlers and agents
-
-## Recommended fixes
-${recommendations.map((item) => `- ${item}`).join("\n")}
-
-## FAQ ideas to add
-${faqIdeas.map((item) => `- ${item}`).join("\n")}
-
-## llms.txt draft
-\`\`\`txt
-${currentLlms}
-\`\`\`
-
-## Schema JSON-LD draft
-\`\`\`json
-${currentSchema}
-\`\`\`
-`;
-};
 
 const getMissingSignals = (data) => {
   const text = `${data.productDescription} ${data.aiAnswer}`.toLowerCase();
@@ -190,92 +148,192 @@ const getMissingSignals = (data) => {
 };
 
 const getOffer = (score) => {
-  if (score < 55) {
+  if (score < 50) {
     return {
-      label: "Book the Mini Audit",
-      price: "$149",
-      note: "Best when the page needs a manual pass before templates will help.",
+      label: "Book Mini Audit — $149",
+      note: "A human review can help identify the first priorities.",
       url: "https://zzdynamo3.gumroad.com/l/mini-ai-visibility-audit",
-      event: "audit_request",
     };
   }
-  if (score < 80) {
+  if (score < 75) {
     return {
-      label: "Download the Fix Kit",
-      price: "$29",
-      note: "Use templates to add missing pages, FAQ targets, llms.txt, and Schema.",
+      label: "Get Fix Kit — $29",
+      note: "Use reusable templates to close the most common gaps.",
       url: "https://zzdynamo3.gumroad.com/l/ai-visibility-fix-kit",
-      event: "kit_cta_click",
     };
   }
   return {
-    label: "Get the Pro Kit",
-    price: "$49",
-    note: "Useful when the basics are in place and you want a broader rollout plan.",
+    label: "Get Pro Kit — $49",
+    note: "Build a broader site-wide testing and improvement workflow.",
     url: "https://zzdynamo3.gumroad.com/l/ai-visibility-fix-kit",
-    event: "kit_cta_click",
   };
 };
 
-const buildReportHtml = (data, score, recommendations) => {
-  const missingSignals = getMissingSignals(data).slice(0, 4);
-  const fixes = recommendations.slice(0, 4);
+const buildReport = (data, score, recommendations, faqIdeas) => {
+  currentLlms = buildLlms(data);
+  currentSchema = buildSchema(data);
+  return `# AI Visibility Audit: ${data.brandName}
+
+Score: ${score}/100 — ${scoreLabel(score)}
+
+## Findings
+${getMissingSignals(data).map((item) => `- ${item}`).join("\n") || "- No major gaps detected."}
+
+## Priority fixes
+${recommendations.slice(0, 5).map((item) => `- ${item}`).join("\n")}
+
+## FAQ ideas
+${faqIdeas.map((item) => `- ${item}`).join("\n")}
+
+## llms.txt draft
+\`\`\`txt
+${currentLlms}
+\`\`\`
+
+## Schema JSON-LD draft
+\`\`\`json
+${currentSchema}
+\`\`\`
+`;
+};
+
+const sectionHeader = (icon, title) => `
+  <div class="report-section-header">
+    <i data-lucide="${icon}"></i>
+    <h3>${title}</h3>
+  </div>
+`;
+
+const buildReportHtml = (data, score, recommendations, faqIdeas) => {
+  const missing = getMissingSignals(data).slice(0, 5);
   const offer = getOffer(score);
-
   return `
-    <div class="result-section">
-      <div class="signal-grid">
-        <div class="signal-card">
-          <strong>AI Visibility Score</strong>
-          <p>${score}/100 based on product clarity, answer coverage, structured content, and citeable pages.</p>
-        </div>
-        <div class="signal-card">
-          <strong>Missing buyer-intent signals</strong>
-          <ul class="result-list">
-            ${missingSignals.map((item) => `<li>${escapeHtml(item)}</li>`).join("") || "<li>No major gaps detected.</li>"}
-          </ul>
-        </div>
-      </div>
+    <section class="report-section">
+      ${sectionHeader("list-checks", "Findings")}
+      <ul class="report-list">
+        ${missing.map((item) => `<li>${escapeHtml(item)}</li>`).join("") || "<li>No major gaps detected.</li>"}
+      </ul>
+    </section>
 
-      <div class="signal-card">
-        <strong>Top recommended fixes</strong>
-        <ul class="result-list">
-          ${fixes.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-        </ul>
-      </div>
+    <section class="report-section">
+      ${sectionHeader("wrench", "Priority fixes")}
+      <ol class="report-list">
+        ${recommendations.slice(0, 4).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ol>
+    </section>
 
-      <div class="cta-card">
-        <span class="badge">${offer.price}</span>
-        <h4>${escapeHtml(offer.label)}</h4>
+    <section class="report-section">
+      ${sectionHeader("sparkles", "FAQ ideas")}
+      <ul class="report-list">
+        ${faqIdeas.slice(0, 3).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ul>
+    </section>
+
+    <section class="report-section">
+      ${sectionHeader("file-code-2", "Generated assets")}
+      <div class="asset-list">
+        <div class="asset-row"><span><i data-lucide="file-text"></i> Full report</span><small>Ready to copy</small></div>
+        <div class="asset-row"><span><i data-lucide="file-text"></i> llms.txt</span><small>Ready to copy</small></div>
+        <div class="asset-row"><span><i data-lucide="braces"></i> Schema JSON-LD</span><small>Ready to copy</small></div>
+      </div>
+    </section>
+
+    <section class="report-section">
+      <div class="next-step">
+        <h3>Recommended next step</h3>
         <p>${escapeHtml(offer.note)}</p>
-        <a class="button primary full" href="${offer.url}" data-event="${offer.event}" target="_blank" rel="noreferrer">
-          ${escapeHtml(offer.label)}
+        <a class="button button-primary" href="${offer.url}" target="_blank" rel="noreferrer">
+          ${escapeHtml(offer.label)} <i data-lucide="external-link"></i>
         </a>
       </div>
-
-      <p class="disclaimer">
-        This checker does not guarantee AI rankings, citations, or recommendations.
-        It helps make your website clearer, more structured, and easier for people and AI systems to understand.
-      </p>
-    </div>
+    </section>
   `;
 };
 
-const copyText = async (text, button) => {
-  if (!text) return;
-  await navigator.clipboard.writeText(text);
-  trackEvent("copy_output", { tool: "ai_visibility_checker", target: button.id });
-  const original = button.textContent;
-  button.textContent = "Copied";
-  setTimeout(() => {
-    button.textContent = original;
-  }, 1200);
+const fieldMessages = {
+  brandName: "Enter the public name of your brand or product.",
+  websiteUrl: "Enter a complete URL beginning with https:// or http://.",
+  productDescription: "Describe what the product does and who it helps.",
+};
+
+const validateField = (field) => {
+  const error = document.querySelector(`#${field.id}Error`);
+  let message = "";
+  if (!field.value.trim()) {
+    message = fieldMessages[field.id];
+  } else if (field.id === "websiteUrl") {
+    try {
+      const url = new URL(field.value.trim());
+      if (!["http:", "https:"].includes(url.protocol)) message = fieldMessages.websiteUrl;
+    } catch {
+      message = fieldMessages.websiteUrl;
+    }
+  }
+  field.setAttribute("aria-invalid", String(Boolean(message)));
+  error.textContent = message;
+  return !message;
+};
+
+["brandName", "websiteUrl", "productDescription"].forEach((id) => {
+  const field = document.querySelector(`#${id}`);
+  field.addEventListener("blur", () => validateField(field));
+  field.addEventListener("input", () => {
+    if (field.getAttribute("aria-invalid") === "true") validateField(field);
+  });
+});
+
+const setLoading = (loading) => {
+  submitButton.disabled = loading;
+  submitButton.classList.toggle("is-loading", loading);
+  submitButton.innerHTML = loading
+    ? '<i data-lucide="loader-circle"></i><span>Generating report…</span>'
+    : '<i data-lucide="scan-search"></i><span>Run the Free Checker</span>';
+  icons();
+};
+
+const enableCopyButtons = () => copyButtons.forEach((button) => (button.disabled = false));
+
+const hideCopyFallback = () => {
+  copyFallback.hidden = true;
+  manualCopyText.value = "";
+};
+
+const showCopyFallback = (text, label) => {
+  manualCopyText.value = text;
+  copyFallback.hidden = false;
+  copyStatus.textContent = `Automatic copy was blocked. ${label} is selected for manual copy.`;
+  manualCopyText.focus();
+  manualCopyText.select();
+};
+
+const renderReport = (data) => {
+  hideCopyFallback();
+  const score = scoreAudit(data);
+  const recommendations = buildRecommendations(data);
+  const faqIdeas = buildFaqIdeas(data.brandName, data.targetUsers, data.keywords);
+  currentReport = buildReport(data, score, recommendations, faqIdeas);
+  resultTitle.textContent = `${data.brandName} visibility report`;
+  scoreValue.textContent = score;
+  scoreMeaning.textContent = `${scoreLabel(score)} · Readiness guidance, not a ranking forecast.`;
+  reportOutput.innerHTML = buildReportHtml(data, score, recommendations, faqIdeas);
+  enableCopyButtons();
+  icons();
+  trackEvent("tool_complete", { tool: "ai_visibility_checker", score });
 };
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
-  trackEvent("tool_start", { tool: "ai_visibility_checker" });
+  const requiredFields = ["brandName", "websiteUrl", "productDescription"].map((id) =>
+    document.querySelector(`#${id}`)
+  );
+  const validity = requiredFields.map(validateField);
+  if (validity.includes(false)) {
+    requiredFields[validity.indexOf(false)].focus();
+    return;
+  }
 
+  setLoading(true);
+  trackEvent("tool_start", { tool: "ai_visibility_checker" });
   const data = {
     brandName: getValue("brandName"),
     websiteUrl: getValue("websiteUrl"),
@@ -286,33 +344,108 @@ form.addEventListener("submit", (event) => {
     aiAnswer: getValue("aiAnswer"),
   };
 
-  const score = scoreAudit(data);
-  const recommendations = buildRecommendations(data);
-  currentReport = buildReport(data);
-
-  resultTitle.textContent = `${data.brandName} visibility report`;
-  scoreValue.textContent = score;
-  reportOutput.innerHTML = buildReportHtml(data, score, recommendations);
-  trackEvent("tool_complete", { tool: "ai_visibility_checker", score });
+  window.setTimeout(() => {
+    renderReport(data);
+    setLoading(false);
+    if (window.innerWidth < 981) reportPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 350);
 });
 
-copyMarkdown.addEventListener("click", () => copyText(currentReport, copyMarkdown));
-copyLlms.addEventListener("click", () => copyText(currentLlms, copyLlms));
-copySchema.addEventListener("click", () => copyText(currentSchema, copySchema));
+const copyText = async (text, button, label) => {
+  if (!text || button.disabled) return;
+  try {
+    await writeClipboard(text);
+    const original = button.innerHTML;
+    hideCopyFallback();
+    button.classList.add("is-success");
+    button.innerHTML = '<i data-lucide="check"></i><span>Copied</span>';
+    copyStatus.textContent = `${label} copied to clipboard.`;
+    icons();
+    trackEvent("copy_output", { tool: "ai_visibility_checker", target: button.id });
+    window.setTimeout(() => {
+      button.classList.remove("is-success");
+      button.innerHTML = original;
+      icons();
+    }, 1600);
+  } catch {
+    showCopyFallback(text, label);
+  }
+};
+
+const writeClipboard = async (text) => {
+  if (copyWithSelection(text)) {
+    return;
+  }
+
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch {
+      // Use the selection-based path below when async clipboard access is
+      // blocked by an embedded browser or local preview context.
+    }
+  }
+
+  throw new Error("Copy command was not accepted by the browser.");
+};
+
+const copyWithSelection = (text) => {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.top = "0";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  textarea.setSelectionRange(0, textarea.value.length);
+
+  const copied = document.execCommand("copy");
+  textarea.remove();
+
+  return copied;
+};
+
+copyButtons[0].addEventListener("click", () => copyText(currentReport, copyButtons[0], "Report"));
+copyButtons[1].addEventListener("click", () => copyText(currentLlms, copyButtons[1], "llms.txt"));
+copyButtons[2].addEventListener("click", () => copyText(currentSchema, copyButtons[2], "Schema"));
+
+menuButton.addEventListener("click", () => {
+  const open = menuButton.getAttribute("aria-expanded") === "true";
+  menuButton.setAttribute("aria-expanded", String(!open));
+  menuButton.setAttribute("aria-label", open ? "Open navigation" : "Close navigation");
+  menuButton.innerHTML = `<i data-lucide="${open ? "menu" : "x"}"></i>`;
+  primaryNav.classList.toggle("is-open", !open);
+  icons();
+});
+
+primaryNav.addEventListener("click", (event) => {
+  if (!event.target.closest("a") || window.innerWidth > 760) return;
+  menuButton.setAttribute("aria-expanded", "false");
+  menuButton.setAttribute("aria-label", "Open navigation");
+  menuButton.innerHTML = '<i data-lucide="menu"></i>';
+  primaryNav.classList.remove("is-open");
+  icons();
+});
+
+exampleButton.addEventListener("click", () => {
+  document.querySelector("#brandName").value = "Northstar CRM";
+  document.querySelector("#websiteUrl").value = "https://example.com";
+  document.querySelector("#productDescription").value =
+    "A privacy-first lightweight CRM for independent consultants that organizes clients, projects, follow-ups, and proposals.";
+  document.querySelector("#targetUsers").value = "Independent consultants, small agencies";
+  document.querySelector("#competitors").value = "HubSpot, Pipedrive, Notion";
+  document.querySelector("#keywords").value = "best CRM for consultants, simple client tracker";
+  document.querySelector("#aiAnswer").value =
+    "Common options include HubSpot and Pipedrive. Compare pricing, alternatives, FAQs, and use cases before choosing.";
+  form.requestSubmit();
+});
 
 document.addEventListener("click", (event) => {
   const link = event.target.closest("a");
   if (!link) return;
-
-  const text = link.textContent.trim();
-  if (link.dataset.event) {
-    trackEvent(link.dataset.event, { url: link.href, text });
-  }
   if (link.href.includes("gumroad.com")) {
-    trackEvent("gumroad_click", { url: link.href, text });
-  }
-  if (link.href.startsWith("mailto:")) {
-    trackEvent("audit_request", { url: link.href, text });
+    trackEvent("gumroad_click", { url: link.href, text: link.textContent.trim() });
   }
 });
-
