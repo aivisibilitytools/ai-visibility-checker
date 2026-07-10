@@ -1,271 +1,510 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Visibility Checker - Free AI Search Readiness Audit</title>
+    <title>AI Visibility Checker — Free, Privacy-First Audit</title>
     <meta
       name="description"
-      content="Run a privacy-first AI visibility audit for your SaaS or indie product. Find missing buyer-intent signals, generate llms.txt, FAQ ideas, and structured data."
+      content="Check how clearly AI search tools can understand your product. Get a local, privacy-first score, priority fixes, llms.txt, and Schema drafts."
     />
     <link rel="canonical" href="https://aivisibilitytools.github.io/ai-visibility-checker/" />
-    <meta property="og:title" content="AI Visibility Checker - Free AI Search Readiness Audit" />
-    <meta
-      property="og:description"
-      content="Check whether your product page is clear enough for people and AI search tools to understand. Get a score, missing signals, and recommended fixes."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://aivisibilitytools.github.io/ai-visibility-checker/" />
-    <meta name="twitter:card" content="summary" />
     <link rel="stylesheet" href="style.css" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "AI Visibility Checker",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "url": "https://aivisibilitytools.github.io/ai-visibility-checker/",
-        "description": "A privacy-first static AI visibility audit tool for SaaS founders and indie makers.",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-      }
-    </script>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
   </head>
   <body>
-    <header class="topbar">
-      <a class="brand" href="index.html">AI Visibility Tools</a>
-      <nav aria-label="Primary navigation">
-        <a href="#checker">Free Checker</a>
-        <a href="tools/llms-generator.html">llms.txt</a>
-        <a href="tools/faq-generator.html">FAQ</a>
-        <a href="#pricing">Fix Kits</a>
-        <a href="https://aivisibilitytools.github.io/micro-tool-network/">All Tools</a>
-        <a href="privacy.html">Privacy</a>
-      </nav>
+    <a class="skip-link" href="#checker">Skip to checker</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="AI Visibility Checker home">
+          <span class="brand-mark" aria-hidden="true">
+            <i data-lucide="scan-search"></i>
+          </span>
+          <span>AI Visibility Checker</span>
+        </a>
+
+        <button
+          id="menuButton"
+          class="icon-button menu-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primaryNav"
+          aria-label="Open navigation"
+        >
+          <i data-lucide="menu"></i>
+        </button>
+
+        <nav id="primaryNav" class="primary-nav" aria-label="Primary navigation">
+          <a class="active" href="#checker">Checker</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#pricing">Plans</a>
+          <a href="#tools">Tools</a>
+          <a
+            class="nav-external"
+            href="https://aivisibilitytools.github.io/micro-tool-network/"
+          >
+            All tools <i data-lucide="external-link"></i>
+          </a>
+        </nav>
+      </div>
     </header>
 
     <main>
       <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">Privacy-first AI visibility audit</p>
-          <h1>Find the missing signals that make your product hard to understand.</h1>
-          <p class="subhead">
-            Paste your product details and an AI answer snippet. Get a practical
-            visibility score, buyer-intent gaps, recommended fixes, llms.txt,
-            FAQ ideas, and Schema markup you can copy.
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#checker">Run the Free Checker</a>
-            <a class="button secondary" href="#pricing">Compare Plans</a>
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">AI Visibility Checker</p>
+            <h1>Check how clearly AI search tools can understand your product.</h1>
+            <p class="hero-description">
+              Get a practical visibility score, missing signals, priority fixes,
+              and copyable llms.txt and Schema drafts—without uploading your data.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#checker">
+                <i data-lucide="scan-search"></i>
+                Run the Free Checker
+              </a>
+              <button id="exampleButton" class="button button-secondary" type="button">
+                See Example Report
+              </button>
+            </div>
           </div>
-          <div class="trust-strip">
-            <span>No login</span>
-            <span>No upload</span>
-            <span>Browser-only</span>
-            <span>Static site</span>
-          </div>
-        </div>
-        <div class="hero-panel result-preview" aria-label="Example AI visibility result">
-          <p class="eyebrow">Example result</p>
-          <div class="score-card">
-            <span>AI Visibility Score</span>
-            <strong>72</strong>
-            <small>/100</small>
-          </div>
-          <ul>
-            <li>Missing comparison page</li>
-            <li>No buyer-intent FAQ targets</li>
-            <li>No llms.txt product summary</li>
-            <li>Weak structured data</li>
-          </ul>
-        </div>
-      </section>
 
-      <section id="checker" class="checker">
-        <div class="section-heading">
-          <p class="eyebrow">Free diagnosis</p>
-          <h2>Run your AI visibility checker</h2>
-          <p>
-            The checker is deterministic and local. It does not promise AI
-            rankings, citations, or recommendations.
-          </p>
-        </div>
-
-        <div class="tool-grid">
-          <form id="auditForm" class="card form-card">
-            <label for="brandName">Brand name</label>
-            <input id="brandName" type="text" placeholder="Acme CRM" required />
-
-            <label for="websiteUrl">Website URL</label>
-            <input id="websiteUrl" type="url" placeholder="https://example.com" required />
-
-            <label for="productDescription">One-line product description</label>
-            <textarea
-              id="productDescription"
-              rows="3"
-              placeholder="A lightweight CRM for solo consultants..."
-              required
-            ></textarea>
-
-            <label for="targetUsers">Target users</label>
-            <input id="targetUsers" type="text" placeholder="Solo consultants, small agencies" />
-
-            <label for="competitors">Top competitors</label>
-            <input id="competitors" type="text" placeholder="HubSpot, Pipedrive, Notion" />
-
-            <label for="keywords">Target search phrases</label>
-            <input
-              id="keywords"
-              type="text"
-              placeholder="best CRM for consultants, simple client tracker"
-            />
-
-            <label for="aiAnswer">Paste an AI answer snippet</label>
-            <textarea
-              id="aiAnswer"
-              rows="5"
-              placeholder="Paste what ChatGPT, Perplexity, or Gemini says when asked for tools in your category."
-            ></textarea>
-
-            <button class="button primary full" type="submit">Run the Free Checker</button>
-          </form>
-
-          <aside class="card result-card">
-            <div class="result-header">
+          <div class="hero-summary" aria-label="What the checker provides">
+            <div class="summary-item">
+              <i data-lucide="gauge"></i>
               <div>
-                <p class="eyebrow">Result</p>
-                <h3 id="resultTitle">Your AI visibility report will appear here</h3>
-              </div>
-              <div class="score-ring">
-                <strong id="scoreValue">--</strong>
-                <span>/100</span>
+                <strong>Practical score</strong>
+                <span>See how clearly your product is described.</span>
               </div>
             </div>
-
-            <div id="reportOutput" class="report-output">
-              Fill out the form to generate a score, missing buyer-intent
-              signals, recommended fixes, and copyable outputs.
+            <div class="summary-item">
+              <i data-lucide="list-checks"></i>
+              <div>
+                <strong>Priority fixes</strong>
+                <span>Focus on the most useful next actions.</span>
+              </div>
             </div>
-
-            <div class="copy-actions">
-              <button id="copyMarkdown" class="button secondary" type="button">Copy Report</button>
-              <button id="copyLlms" class="button secondary" type="button">Copy llms.txt</button>
-              <button id="copySchema" class="button secondary" type="button">Copy Schema</button>
+            <div class="summary-item">
+              <i data-lucide="file-code-2"></i>
+              <div>
+                <strong>Reusable drafts</strong>
+                <span>Copy llms.txt and Schema starter files.</span>
+              </div>
             </div>
-          </aside>
+          </div>
         </div>
       </section>
 
-      <section id="pricing" class="pricing">
-        <div class="section-heading">
-          <p class="eyebrow">Fix path</p>
-          <h2>Choose the smallest next step that matches your score</h2>
-          <p>
-            Start with the free checker. Upgrade only when you want templates,
-            prompts, or a manual review.
-          </p>
+      <div class="trust-bar">
+        <div class="container trust-inner">
+          <span><i data-lucide="shield-check"></i> Runs entirely in your browser</span>
+          <span>No login</span>
+          <span>Nothing uploaded</span>
+          <span>Free to use</span>
         </div>
+      </div>
 
-        <div class="price-grid">
-          <article class="card price-card">
-            <span class="badge">Starter templates</span>
-            <h3>AI Visibility Fix Kit</h3>
-            <p class="price">$29</p>
-            <p class="plan-summary">A focused template pack for fixing the most common clarity gaps.</p>
-            <ul>
-              <li>30-day AI visibility checklist</li>
-              <li>llms.txt and FAQ templates</li>
-              <li>Competitor comparison page template</li>
-              <li>Schema JSON-LD and homepage checklists</li>
-            </ul>
-            <a
-              class="button primary full"
-              href="https://zzdynamo3.gumroad.com/l/ai-visibility-fix-kit"
-              target="_blank"
-              rel="noreferrer"
-            >Get the Fix Kit</a>
-            <p class="delivery-note">One-time payment · Instant ZIP download</p>
-          </article>
-
-          <article class="card price-card featured">
-            <span class="badge recommended">Recommended</span>
-            <h3>AI Visibility Pro Kit</h3>
-            <p class="price">$49</p>
-            <p class="plan-summary">The complete self-serve workflow for a structured site-wide cleanup.</p>
-            <ul>
-              <li>Everything in Fix Kit</li>
-              <li>30-day improvement plan and audit spreadsheet</li>
-              <li>Advanced prompt library and competitor tracker</li>
-              <li>Internal linking planner and weekly dashboard</li>
-            </ul>
-            <a
-              class="button primary full"
-              href="https://zzdynamo3.gumroad.com/l/ai-visibility-fix-kit"
-              target="_blank"
-              rel="noreferrer"
-            >Get the Pro Kit</a>
-            <p class="delivery-note">Select “AI Visibility Pro Kit” on Gumroad · Instant ZIP download</p>
-          </article>
-
-          <article class="card price-card">
-            <span class="badge service-badge">Human review</span>
-            <h3>Mini AI Visibility Audit</h3>
-            <p class="price">$149</p>
-            <p class="plan-summary">A lightweight human review when you need priorities, not more templates.</p>
-            <ul>
-              <li>Homepage plus up to 2 important pages</li>
-              <li>AI/search visibility issue summary</li>
-              <li>Top 10 fixes ranked by priority</li>
-              <li>1-page action plan and prompt test summary</li>
-            </ul>
-            <a
-              class="button secondary full"
-              href="https://zzdynamo3.gumroad.com/l/mini-ai-visibility-audit"
-              target="_blank"
-              rel="noreferrer"
-            >Book the Mini Audit</a>
-            <p class="delivery-note">Human-delivered review · Usually within 48–72 hours</p>
-          </article>
-        </div>
-
-        <p class="free-note">
-          <strong>Free tools stay free.</strong> Paid kits provide reusable templates and workflow files.
-        </p>
-        <p class="disclaimer">
-          Disclaimer: this tool does not guarantee AI rankings, citations, or
-          recommendations. It helps your website become clearer, more
-          structured, and easier for people and AI systems to understand.
-        </p>
-      </section>
-
-      <section class="pricing">
-        <div class="section-heading">
-          <p class="eyebrow">Free supporting tools</p>
-          <h2>Generate the missing assets</h2>
-        </div>
-
-        <div class="price-grid">
-          <div class="card price-card">
-            <h3>llms.txt Generator</h3>
-            <p>Create a clean AI-readable product summary for your website.</p>
-            <a class="button secondary full" href="tools/llms-generator.html">Generate llms.txt</a>
+      <section id="checker" class="section checker-section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Free diagnosis</p>
+            <h2>Run your AI visibility check</h2>
+            <p>
+              Complete the three required fields. Optional context makes the
+              recommendations more specific.
+            </p>
           </div>
 
-          <div class="card price-card">
-            <h3>FAQ Generator</h3>
-            <p>Turn buyer questions and objections into clear answer targets.</p>
-            <a class="button secondary full" href="tools/faq-generator.html">Generate FAQ Answers</a>
+          <div class="checker-layout">
+            <form id="auditForm" class="tool-panel" novalidate>
+              <fieldset class="form-group">
+                <legend>
+                  <span>About your product</span>
+                  <small>Required</small>
+                </legend>
+
+                <div class="field">
+                  <div class="label-row">
+                    <label for="brandName">Brand name</label>
+                    <span>Required</span>
+                  </div>
+                  <input
+                    id="brandName"
+                    name="brandName"
+                    type="text"
+                    autocomplete="organization"
+                    placeholder="Acme CRM"
+                    aria-describedby="brandNameHelp brandNameError"
+                    required
+                  />
+                  <p id="brandNameHelp" class="field-help">Use the name customers see publicly.</p>
+                  <p id="brandNameError" class="field-error" aria-live="polite"></p>
+                </div>
+
+                <div class="field">
+                  <div class="label-row">
+                    <label for="websiteUrl">Website URL</label>
+                    <span>Required</span>
+                  </div>
+                  <input
+                    id="websiteUrl"
+                    name="websiteUrl"
+                    type="url"
+                    inputmode="url"
+                    autocomplete="url"
+                    placeholder="https://example.com"
+                    aria-describedby="websiteUrlHelp websiteUrlError"
+                    required
+                  />
+                  <p id="websiteUrlHelp" class="field-help">Enter the page you want to improve.</p>
+                  <p id="websiteUrlError" class="field-error" aria-live="polite"></p>
+                </div>
+
+                <div class="field">
+                  <div class="label-row">
+                    <label for="productDescription">One-line product description</label>
+                    <span>Required</span>
+                  </div>
+                  <textarea
+                    id="productDescription"
+                    name="productDescription"
+                    rows="3"
+                    placeholder="A lightweight CRM for independent consultants..."
+                    aria-describedby="productDescriptionHelp productDescriptionError"
+                    required
+                  ></textarea>
+                  <p id="productDescriptionHelp" class="field-help">
+                    Say what the product does and who it helps.
+                  </p>
+                  <p id="productDescriptionError" class="field-error" aria-live="polite"></p>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-group optional-group">
+                <legend>
+                  <span>Improve the diagnosis</span>
+                  <small>Optional</small>
+                </legend>
+
+                <div class="field">
+                  <div class="label-row">
+                    <label for="targetUsers">Target users</label>
+                    <span>Optional</span>
+                  </div>
+                  <input
+                    id="targetUsers"
+                    name="targetUsers"
+                    type="text"
+                    placeholder="Independent consultants, small agencies"
+                  />
+                </div>
+
+                <div class="field">
+                  <div class="label-row">
+                    <label for="competitors">Top competitors</label>
+                    <span>Optional</span>
+                  </div>
+                  <input
+                    id="competitors"
+                    name="competitors"
+                    type="text"
+                    placeholder="HubSpot, Pipedrive, Notion"
+                  />
+                  <p class="field-help">Separate names with commas.</p>
+                </div>
+
+                <div class="field">
+                  <div class="label-row">
+                    <label for="keywords">Target search phrases</label>
+                    <span>Optional</span>
+                  </div>
+                  <input
+                    id="keywords"
+                    name="keywords"
+                    type="text"
+                    placeholder="best CRM for consultants, simple client tracker"
+                  />
+                  <p class="field-help">Separate phrases with commas.</p>
+                </div>
+
+                <div class="field">
+                  <div class="label-row">
+                    <label for="aiAnswer">AI answer snippet</label>
+                    <span>Optional</span>
+                  </div>
+                  <textarea
+                    id="aiAnswer"
+                    name="aiAnswer"
+                    rows="5"
+                    placeholder="Paste what an AI assistant says when asked for tools in your category."
+                  ></textarea>
+                </div>
+              </fieldset>
+
+              <div class="submit-area">
+                <button id="submitButton" class="button button-primary submit-button" type="submit">
+                  <i data-lucide="scan-search"></i>
+                  <span>Run the Free Checker</span>
+                </button>
+                <p><i data-lucide="shield-check"></i> Your entries never leave this browser.</p>
+              </div>
+            </form>
+
+            <aside id="reportPanel" class="report-panel" aria-labelledby="resultTitle">
+              <div class="report-header">
+                <div>
+                  <p class="eyebrow">Your report</p>
+                  <h2 id="resultTitle">Ready when you are</h2>
+                </div>
+                <div class="score" aria-label="AI visibility score">
+                  <strong id="scoreValue">--</strong>
+                  <span>/100</span>
+                </div>
+              </div>
+
+              <div id="scoreMeaning" class="score-meaning">Complete the required fields to start.</div>
+
+              <div id="reportOutput" class="report-output" aria-live="polite">
+                <div class="empty-state">
+                  <i data-lucide="clipboard-check"></i>
+                  <h3>Generate a useful starting point</h3>
+                  <p>
+                    You’ll receive a score, findings, priority fixes, generated
+                    assets, and a recommended next step.
+                  </p>
+                </div>
+              </div>
+
+              <div class="asset-actions" aria-label="Generated asset actions">
+                <button id="copyMarkdown" class="button button-outline" type="button" disabled>
+                  <i data-lucide="copy"></i><span>Copy report</span>
+                </button>
+                <button id="copyLlms" class="button button-outline" type="button" disabled>
+                  <i data-lucide="copy"></i><span>Copy llms.txt</span>
+                </button>
+                <button id="copySchema" class="button button-outline" type="button" disabled>
+                  <i data-lucide="copy"></i><span>Copy Schema</span>
+                </button>
+              </div>
+              <p id="copyStatus" class="sr-only" aria-live="polite"></p>
+              <div id="copyFallback" class="copy-fallback" hidden>
+                <label for="manualCopyText">Copy manually</label>
+                <p>Automatic copy was blocked by this browser. The text below is selected—press Ctrl+C or Cmd+C.</p>
+                <textarea id="manualCopyText" rows="6" readonly></textarea>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works" class="section section-muted">
+        <div class="container narrow">
+          <div class="section-heading">
+            <p class="eyebrow">How the score works</p>
+            <h2>A deterministic readiness check—not a ranking forecast</h2>
+            <p>
+              The checker looks for clear product positioning, buyer-intent
+              context, structured content, and useful pages. It does not access
+              your website or promise AI citations.
+            </p>
+          </div>
+          <div class="score-scale">
+            <div><strong>0–49</strong><span>Needs clearer signals</span></div>
+            <div><strong>50–74</strong><span>Good foundation</span></div>
+            <div><strong>75–100</strong><span>Strong structure</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="section pricing-section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Optional next steps</p>
+            <h2>Choose the level of help you need</h2>
+            <p>Start free. Upgrade only when reusable files or a human review will save time.</p>
+          </div>
+
+          <div class="price-grid">
+            <article class="price-card">
+              <div class="plan-label"><i data-lucide="package"></i> Digital download</div>
+              <h3>AI Visibility Fix Kit</h3>
+              <p class="price">$29 <span>one-time</span></p>
+              <p class="plan-summary">Templates for fixing the most common clarity gaps.</p>
+              <ul class="check-list">
+                <li><i data-lucide="check"></i> 30-day visibility checklist</li>
+                <li><i data-lucide="check"></i> llms.txt and FAQ templates</li>
+                <li><i data-lucide="check"></i> Comparison page template</li>
+                <li><i data-lucide="check"></i> Schema and homepage checklists</li>
+              </ul>
+              <a
+                class="button button-secondary button-full"
+                href="https://zzdynamo3.gumroad.com/l/ai-visibility-fix-kit"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Get Fix Kit — $29 <i data-lucide="external-link"></i>
+              </a>
+            </article>
+
+            <article class="price-card recommended-card">
+              <span class="recommended-label">Recommended</span>
+              <div class="plan-label"><i data-lucide="package-check"></i> Digital download</div>
+              <h3>AI Visibility Pro Kit</h3>
+              <p class="price">$49 <span>one-time</span></p>
+              <p class="plan-summary">The complete self-serve workflow for a site-wide cleanup.</p>
+              <ul class="check-list">
+                <li><i data-lucide="check"></i> Everything in Fix Kit</li>
+                <li><i data-lucide="check"></i> Improvement plan and audit spreadsheet</li>
+                <li><i data-lucide="check"></i> Prompt library and competitor tracker</li>
+                <li><i data-lucide="check"></i> Internal linking planner and dashboard</li>
+              </ul>
+              <a
+                class="button button-primary button-full"
+                href="https://zzdynamo3.gumroad.com/l/ai-visibility-fix-kit"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Get Pro Kit — $49 <i data-lucide="external-link"></i>
+              </a>
+              <p class="delivery-note">Select “AI Visibility Pro Kit” on Gumroad.</p>
+            </article>
+
+            <article class="price-card">
+              <div class="plan-label human"><i data-lucide="user-round-check"></i> Human review</div>
+              <h3>Mini AI Visibility Audit</h3>
+              <p class="price">$149</p>
+              <p class="plan-summary">A focused human review when you need clear priorities.</p>
+              <ul class="check-list">
+                <li><i data-lucide="check"></i> Homepage plus 2 important pages</li>
+                <li><i data-lucide="check"></i> Visibility issue summary</li>
+                <li><i data-lucide="check"></i> Top 10 prioritized fixes</li>
+                <li><i data-lucide="check"></i> One-page action plan</li>
+              </ul>
+              <a
+                class="button button-secondary button-full"
+                href="https://zzdynamo3.gumroad.com/l/mini-ai-visibility-audit"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Book Mini Audit — $149 <i data-lucide="external-link"></i>
+              </a>
+              <p class="delivery-note">Human-delivered, usually within 48–72 hours.</p>
+            </article>
+          </div>
+
+          <p class="free-note">Free tools stay free. Paid kits provide reusable templates and workflow files.</p>
+          <p class="disclaimer">
+            No plan guarantees AI rankings, citations, traffic, or sales.
+          </p>
+        </div>
+      </section>
+
+      <section id="tools" class="section section-muted">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Recommended workflow</p>
+            <h2>Turn findings into useful site assets</h2>
+          </div>
+          <div class="workflow-list">
+            <a class="workflow-item" href="tools/llms-generator.html">
+              <span class="tool-icon tool-icon-blue"><i data-lucide="file-text"></i></span>
+              <span>
+                <strong>Generate your llms.txt</strong>
+                <small>Create a concise, AI-readable product summary.</small>
+              </span>
+              <i data-lucide="arrow-right"></i>
+            </a>
+            <a class="workflow-item" href="tools/faq-generator.html">
+              <span class="tool-icon tool-icon-teal"><i data-lucide="message-square-text"></i></span>
+              <span>
+                <strong>Build buyer-intent FAQs</strong>
+                <small>Turn customer questions into clear answer targets.</small>
+              </span>
+              <i data-lucide="arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section faq-section">
+        <div class="container narrow">
+          <div class="section-heading">
+            <p class="eyebrow">FAQ</p>
+            <h2>What to know before you run the checker</h2>
+          </div>
+          <div class="faq-list">
+            <details>
+              <summary>Is my data uploaded?</summary>
+              <p>No. The checker runs in your browser and does not send your entries to a server.</p>
+            </details>
+            <details>
+              <summary>What does the score measure?</summary>
+              <p>
+                It checks product clarity, answer coverage, buyer-intent context,
+                and signals such as FAQs, comparison content, llms.txt, and Schema.
+              </p>
+            </details>
+            <details>
+              <summary>Does a high score guarantee AI citations or rankings?</summary>
+              <p>No. The score is a readiness guide, not a prediction or guarantee.</p>
+            </details>
+            <details>
+              <summary>What is included in the free checker?</summary>
+              <p>
+                A score, missing signals, priority fixes, FAQ ideas, an llms.txt
+                draft, and a Schema JSON-LD draft.
+              </p>
+            </details>
+            <details>
+              <summary>What is the difference between Fix Kit and Pro Kit?</summary>
+              <p>
+                Fix Kit covers common page and asset gaps. Pro Kit adds planning,
+                tracking, testing, and a broader site-wide workflow.
+              </p>
+            </details>
+            <details>
+              <summary>What happens in the Mini Audit?</summary>
+              <p>
+                A human reviews your homepage and up to two important pages, then
+                delivers prioritized issues and a concise action plan.
+              </p>
+            </details>
           </div>
         </div>
       </section>
     </main>
 
-    <footer>
-      <p>AI Visibility Tools. Privacy-first static tools for clearer product pages.</p>
-      <a href="privacy.html">Privacy Policy</a>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand footer-brand" href="index.html">
+            <span class="brand-mark" aria-hidden="true"><i data-lucide="scan-search"></i></span>
+            <span>AI Visibility Tools</span>
+          </a>
+          <p>Privacy-first browser tools for clearer product pages.</p>
+        </div>
+        <div>
+          <h2>Tools</h2>
+          <a href="#checker">AI Visibility Checker</a>
+          <a href="tools/llms-generator.html">llms.txt Generator</a>
+          <a href="tools/faq-generator.html">FAQ Generator</a>
+          <a href="https://aivisibilitytools.github.io/micro-tool-network/">All Tools</a>
+        </div>
+        <div>
+          <h2>Products</h2>
+          <a href="#pricing">Fix Kit</a>
+          <a href="#pricing">Pro Kit</a>
+          <a href="#pricing">Mini Audit</a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <a href="privacy.html">Privacy Policy</a>
+        <p>No ranking, citation, traffic, or sales guarantees.</p>
+      </div>
     </footer>
 
     <script src="app.js"></script>
   </body>
 </html>
-
